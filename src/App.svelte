@@ -4,7 +4,8 @@
     const imageUrl = writable('');
     const isLoading = writable(false);
 
-    const RUNPOD_API_KEY = import.meta.env.VITE_API_KEY
+    const RUNPOD_API_KEY = import.meta.env.VITE_API_KEY;
+
     async function generateImage() {
         if ($isLoading) {
             // Optionally, inform the user or simply return to avoid concurrent generations
@@ -19,7 +20,8 @@
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": "Bearer ${RUNPOD_API_KEY}",
+            // Correctly interpolate the variable into the string
+            "Authorization": `Bearer ${RUNPOD_API_KEY}`,
         };
         const data = {
             "input": {
