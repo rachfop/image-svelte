@@ -8,19 +8,17 @@
 
     async function generateImage() {
         if ($isLoading) {
-            // Optionally, inform the user or simply return to avoid concurrent generations
             console.log("Please wait for the current image to finish generating.");
             return;
         }
 
         isLoading.set(true);
-        imageUrl.set(''); // Optionally reset the image URL if you want to clear the previous image immediately
+        imageUrl.set('');
 
         const url = "https://api.runpod.ai/v2/vps0rnvp1ud2uy/runsync"; // Your API URL
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            // Correctly interpolate the variable into the string
             "Authorization": `Bearer ${RUNPOD_API_KEY}`,
         };
         const data = {
