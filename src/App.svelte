@@ -1,10 +1,10 @@
 <script>
     import { writable } from 'svelte/store';
+
+    // Stores for handling input, image URL, and loading state
     const inputPrompt = writable('');
     const imageUrl = writable('');
     const isLoading = writable(false);
-
-    const RUNPOD_API_KEY = import.meta.env.VITE_API_KEY;
 
     async function generateImage() {
         if ($isLoading) {
@@ -15,12 +15,13 @@
         isLoading.set(true);
         imageUrl.set('');
 
-        const url = "https://api.runpod.ai/v2/vps0rnvp1ud2uy/runsync"; // Your API URL
+        const url = "https://api.runpod.ai/v2/vps0rnvp1ud2uy/runsync";
         const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${RUNPOD_API_KEY}`,
+            "Authorization": "Bearer YC0JCT5QW8Y2J2KXO5M8RPOQRE6E4IRO3P340IJ8", // Be cautious with API keys
         };
+
         const data = {
             "input": {
                 "prompt": $inputPrompt,
@@ -28,7 +29,7 @@
                 "width": 1024,
                 "height": 1024,
                 "guidance_scale": 3,
-                "seed": null, // Consider updating or removing the seed for new random results
+                "seed": null, // Consider updating or removing for random results
                 "num_images": 1,
             }
         };
@@ -48,7 +49,7 @@
                 throw new Error(responseData.message || 'Failed to generate image');
             }
         } catch (error) {
-            console.error('Error generating image:', error);
+            console.error('Error generating image:', error.message);
         } finally {
             isLoading.set(false);
         }
@@ -58,12 +59,15 @@
 <div class="container">
     <h1>Generate your images</h1>
     <input type="text" bind:value={$inputPrompt} placeholder="Enter your prompt" />
-    <button on:click={generateImage} disabled={$isLoading}>{$isLoading ? 'Generating...' : 'Generate Image'}</button>
+    <button on:click={generateImage} disabled={$isLoading}>
+        {$isLoading ? 'Generating...' : 'Generate Image'}
+    </button>
 
     {#if $imageUrl}
-        <img src={$imageUrl} alt="Generated Image" />
+        <img src={$imageUrl} alt="Image generated from the prompt: {$inputPrompt}" />
     {/if}
 </div>
+
 <style>
     .container {
         display: flex;
@@ -73,7 +77,7 @@
         height: 100vh;
         padding-top: 20px;
     }
-	h1 {
+    h1 {
         margin: 0 0 20px;
         text-align: center;
         font-size: 24px;
@@ -81,12 +85,10 @@
     button {
         margin-top: 10px;
     }
-
-	img {
-    margin-top: 20px;
-    max-width: 100%;
-    height: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
+    img {
+        margin-top: 20px;
+        max-width: 100%;
+        height: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 </style>

@@ -19,6 +19,7 @@
     "svelte": "^3.55.0"
   },
   "dependencies": {
+    "dotenv": "^16.4.4",
     "sirv-cli": "^2.0.0"
   }
 }
