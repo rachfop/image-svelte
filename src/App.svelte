@@ -44,8 +44,7 @@
             if (response.ok && responseData.output) {
                 const base64Image = responseData.output.split(",")[1];
                 imageUrl.set(`data:image/png;base64,${base64Image}`);
-            } if (response.)
-			else {
+            } else {
                 throw new Error(responseData.message || 'Failed to generate image');
             }
         } catch (error) {
